@@ -1,5 +1,7 @@
 package com.xuyihao.test;
 
+import com.xuyihao.capture.SocketCapture;
+
 /**
  * created by xuyihao on 2016/5/30
  * @author Johnson
@@ -8,7 +10,8 @@ package com.xuyihao.test;
 public class JohnsonMain {
 
 	public static void main(String[] args) {
-		
+		SocketCapture socketCapture = new SocketCapture(8093);
+		socketCapture.printSocketStream();
 	}
 
 }
