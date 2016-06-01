@@ -62,6 +62,11 @@ public class SocketCapture {
 		while(true){
 			try{
 				Socket socket = this.serverSocket.accept();
+				System.out.println(socket.getInetAddress().toString());
+				System.out.println(socket.getLocalAddress().toString());
+				System.out.println(socket.getPort());
+				System.out.println(socket.getLocalPort());
+				System.out.println(socket.getReceiveBufferSize());
 				InputStream in = socket.getInputStream();
 				InputStreamReader reader = new InputStreamReader(in);
 				char[] c = new char[1];
