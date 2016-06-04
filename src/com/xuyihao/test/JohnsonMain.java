@@ -29,7 +29,7 @@ public class JohnsonMain {
 				socketCapture.reopenNewServerSocket(port);
 				socketCapture.printSocketStreamInNewThread();
 			}else{
-				System.out.println("Please input correctlly:");
+				System.out.println("Please input correctly:");
 				System.out.println("input like:    close server || exit || change pot= || more");
 			}
 		}
