@@ -1,2 +1,0 @@
-path=`pwd`
-java -classpath $path/Test/src/lib/JohnsonWebConnector.jar com.xuyihao.test.TestMain

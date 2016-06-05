@@ -1,9 +1,6 @@
 package com.xuyihao.capture;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -110,7 +107,6 @@ public class SocketCapture extends Thread{
 		private Socket socket;
 		private int socketNumber = 0;
 		private InputStreamReader reader;
-		private OutputStreamWriter writer;
 
 		/**
 		 * @constructor
@@ -121,9 +117,8 @@ public class SocketCapture extends Thread{
 			this.socketNumber = number;
 			try{
 				this.reader = new InputStreamReader(this.socket.getInputStream());
-				this.writer = new OutputStreamWriter(this.socket.getOutputStream());
 			}catch(Exception e){
-				System.out.println("Can not get the streams!");
+				System.out.println("Can not get the InputStream!");
 			}
 		}
 
@@ -142,26 +137,33 @@ public class SocketCapture extends Thread{
 		@Override
 		public void run(){
 			try{
+				OutputStreamWriter writer = new OutputStreamWriter(this.socket.getOutputStream());
+				System.out.println("SocketNumber:       " + this.socketNumber);
+				System.out.println("InetAddress:        " + socket.getInetAddress().toString());
+				System.out.println("LocalAddress:       " + socket.getLocalAddress().toString());
+				System.out.println("Port:               " + socket.getPort());
+				System.out.println("LocalPort:          " + socket.getLocalPort());
+				System.out.println("ReceiveBufferSize:  " + socket.getReceiveBufferSize());
 				while(true){
 					if(this.ifCloseSocket){
 						this.reader.close();
-						this.writer.close();
 						break;
 					}
 					System.out.println("SocketNumber:       " + this.socketNumber);
-					System.out.println("InetAddress:        " + socket.getInetAddress().toString());
-					System.out.println("LocalAddress:       " + socket.getLocalAddress().toString());
-					System.out.println("Port:               " + socket.getPort());
-					System.out.println("LocalPort:          " + socket.getLocalPort());
-					System.out.println("ReceiveBufferSize:  " + socket.getReceiveBufferSize());
-					char[] c = new char[1];
-					while(this.reader.read(c) != -1){
-						System.out.print(c);
+					char[] c = new char[32];
+					int length = 0;
+					while((length = reader.read(c)) != -1){
+						String s = String.valueOf(c);
+						if (s.contains("--~%%~--")){//the reason to stop read from the stream is a '~' in the last position
+							writer.write("This is server and I had received your message!");
+							writer.flush();
+							System.out.print(s.substring(0, s.indexOf("--~%%~--")) + "\n");
+						}else{
+							System.out.print(s);
+						}
 					}
-					writer.write("This is server and I have read your message!");
-					writer.flush();
 				}
-				System.out.println("SocketNumber:  "+this.socketNumber+" stopped!");
+				System.out.println("SocketNumber:  "+this.socketNumber+" thread stopped!");
 			}catch(Exception e) {
 				//do nothing
 			}

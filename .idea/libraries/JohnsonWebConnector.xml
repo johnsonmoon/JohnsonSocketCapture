@@ -1,11 +1,9 @@
 <component name="libraryTable">
   <library name="JohnsonWebConnector">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/Test/src/lib/JohnsonWebConnector.jar!/" />
+      <root url="jar://$PROJECT_DIR$/ExecutableJohnsonSocketCapture(Ubuntu)jdk1.8/Test/lib/JohnsonWebConnector.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$PROJECT_DIR$/Test/src/lib/JohnsonWebConnector.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

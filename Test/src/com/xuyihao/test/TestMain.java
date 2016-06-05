@@ -17,9 +17,16 @@ import java.util.HashMap;
  */
 public class TestMain {
     /**
-     *@fields
+     *@fields for socket
      */
     private static Socket socket;
+
+    /**
+     * fields for httpUtil
+     */
+    private static HttpUtil httpUtil;
+    private static String actionURL;
+    private static HashMap<String, String> parameters;
 
     public static void main(String[] args) throws IOException{
         System.out.println("Please choose a function to use:");
@@ -48,7 +55,6 @@ public class TestMain {
     public static void useSocket()throws IOException{
         System.out.println("Please input your destiny address(like 127.0.0.1:8080):");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
         String actionURL = "";
         String url = "";
         int port = 0;
@@ -67,12 +73,12 @@ public class TestMain {
         }
         socket = new Socket(url, port);
         socket.setSoTimeout(10000);
+        OutputStreamWriter writer = new OutputStreamWriter(socket.getOutputStream());
         System.out.println("Socket created! Now you can send your message to the server!");
         System.out.println("-----Tip-----:");
         System.out.println("Input \"exit\" to stop the program;");
         System.out.println("Input \"send\" to send the message;");
         System.out.println("--------------");
-        OutputStreamWriter writer = new OutputStreamWriter(socket.getOutputStream());
         String command = "";
         String messageSend = "";
         while(true){
@@ -81,21 +87,21 @@ public class TestMain {
                 break;
             }else if(command.equals("send")){
                 if(messageSend.equals("")){
-                    System.out.println("Please input something to be sent before send!");
+                    System.out.println("Please input something to be sent before send!\n");
                 }else {
-                    writer.write(messageSend);
+                    writer.write(messageSend+"--~%%~--");
                     writer.flush();
-                    System.out.println("Message sent!");
+                    System.out.println("Message sent!\n");
                     new Thread(){
                         @Override
                         public void run(){
-                            System.out.println("Getting message thread start now....");
                             try {
                                 InputStreamReader reader = new InputStreamReader(socket.getInputStream());
                                 char[] c = new char[1];
                                 while (reader.read(c) != -1) {
                                     System.out.print(c);
                                 }
+                                System.out.print('\n');
                             }catch (IOException e){
                                 //do nothing
                             }
@@ -105,7 +111,7 @@ public class TestMain {
             }else{
                 messageSend = command;
                 System.out.println("Message to be send:  \""+messageSend+"\"");
-                System.out.println("Input send to send the message:");
+                System.out.println("Input send to send the message:\n");
             }
         }
         writer.close();
@@ -117,11 +123,11 @@ public class TestMain {
      * @method use HttpUtil to send Http Request
      */
     public static void useHttpUtil()throws IOException{
-        HttpUtil httpUtil = new HttpUtil(Platform.LINUX);
-        HashMap<String, String> parameters = new HashMap<>();
+        httpUtil = new HttpUtil(Platform.LINUX);
+        parameters = new HashMap<>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Please input your URL address(without \"Http://\"):");
-        String actionURL = "Http://" + reader.readLine();
+        actionURL = "Http://" + reader.readLine();
         System.out.println(actionURL + " added!");
         System.out.println("-----Tip-----:");
         System.out.println("To start a request, please first input your parameters;");
