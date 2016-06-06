@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="JohnsonWebConnector2">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/ExecutableJohnsonSocketCapture(Windows)jdk1.7/Test/lib/JohnsonWebConnector.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/production/Test/lib/JohnsonWebConnector.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

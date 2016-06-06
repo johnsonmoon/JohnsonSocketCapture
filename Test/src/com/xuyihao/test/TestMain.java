@@ -101,7 +101,7 @@ public class TestMain {
                                 while (reader.read(c) != -1) {
                                     System.out.print(c);
                                 }
-                                System.out.print('\n');
+                                System.out.print("\n");
                             }catch (IOException e){
                                 //do nothing
                             }
